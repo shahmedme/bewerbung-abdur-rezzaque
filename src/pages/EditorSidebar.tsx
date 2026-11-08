@@ -37,6 +37,7 @@ function Field({
 	label,
 	value,
 	onChange,
+	mark = false,
 	multiline = false,
 	rows = 4,
 }: {
@@ -44,12 +45,16 @@ function Field({
 	label: string;
 	value: string;
 	onChange: (value: string) => void;
+	mark?: boolean;
 	multiline?: boolean;
 	rows?: number;
 }) {
 	return (
-		<label className="bew-field" htmlFor={id}>
-			<span>{label}</span>
+		<label className={`bew-field${mark ? " is-marked" : ""}`} htmlFor={id}>
+			<span>
+				{label}
+				{mark ? <span className="bew-required">*</span> : null}
+			</span>
 			{multiline ? (
 				<textarea
 					id={id}
@@ -193,18 +198,6 @@ function EditorSidebar({
 							role="tabpanel"
 						>
 							<Field
-								id="person-job-title"
-								label="Stellenbezeichnung"
-								onChange={(jobTitle) => patch({ jobTitle })}
-								value={data.jobTitle}
-							/>
-							<Field
-								id="person-company"
-								label="Unternehmen"
-								onChange={(companyName) => patch({ companyName })}
-								value={data.companyName}
-							/>
-							<Field
 								id="person-name"
 								label="Name"
 								onChange={(name) => patch({ name })}
@@ -270,30 +263,35 @@ function EditorSidebar({
 							<Field
 								id="letter-job-title"
 								label="Stellenbezeichnung"
+								mark
 								onChange={(jobTitle) => patch({ jobTitle })}
 								value={data.jobTitle}
 							/>
 							<Field
 								id="letter-company"
 								label="Unternehmen"
+								mark
 								onChange={(companyName) => patch({ companyName })}
 								value={data.companyName}
 							/>
 							<Field
 								id="letter-company-street"
 								label="Straße (Unternehmen)"
+								mark
 								onChange={(companyStreet) => patch({ companyStreet })}
 								value={data.companyStreet}
 							/>
 							<Field
 								id="letter-company-city"
 								label="Ort (Unternehmen)"
+								mark
 								onChange={(companyCity) => patch({ companyCity })}
 								value={data.companyCity}
 							/>
 							<Field
 								id="letter-date"
 								label="Datum"
+								mark
 								onChange={(date) => patch({ date })}
 								value={data.date}
 							/>

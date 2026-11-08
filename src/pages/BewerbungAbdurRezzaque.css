@@ -161,6 +161,15 @@
 	font-weight: 700;
 }
 
+.bew-field.is-marked > span {
+	color: #c00000;
+}
+
+.bew-field .bew-required {
+	color: #c00000;
+	margin-left: 0.15em;
+}
+
 .bew-field input,
 .bew-field textarea {
 	width: 100%;
