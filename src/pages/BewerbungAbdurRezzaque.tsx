@@ -433,6 +433,7 @@ function BewerbungAbdurRezzaque() {
 		try {
 			await document.fonts.ready;
 			const pdf = new jsPDF({
+				compress: true,
 				format: "a4",
 				orientation: "portrait",
 				unit: "pt",
@@ -448,7 +449,7 @@ function BewerbungAbdurRezzaque() {
 					backgroundColor: "#ffffff",
 					height: page.scrollHeight,
 					logging: false,
-					scale: 3,
+					scale: 2,
 					useCORS: true,
 					width: page.scrollWidth,
 					windowHeight: page.scrollHeight,
@@ -456,7 +457,16 @@ function BewerbungAbdurRezzaque() {
 				});
 
 				if (index > 0) pdf.addPage("a4", "portrait");
-				pdf.addImage(canvas.toDataURL("image/png"), "PNG", 0, 0, width, height);
+				pdf.addImage(
+					canvas.toDataURL("image/jpeg", 0.86),
+					"JPEG",
+					0,
+					0,
+					width,
+					height,
+					`page-${index}`,
+					"MEDIUM"
+				);
 			}
 
 			pdf.save(fileNameFromName(data.name));
