@@ -8,6 +8,7 @@ import {
 	type CSSProperties,
 } from "react";
 import {
+	applyLetterPlaceholders,
 	fileNameFromName,
 	loadBewerbungData,
 	loadSidebarOpen,
@@ -88,6 +89,24 @@ function DownloadIcon() {
 	);
 }
 
+function PrintIcon() {
+	return (
+		<svg
+			aria-hidden="true"
+			fill="none"
+			stroke="currentColor"
+			strokeLinecap="round"
+			strokeLinejoin="round"
+			strokeWidth="1.8"
+			viewBox="0 0 24 24"
+		>
+			<path d="M6 9V3h12v6" />
+			<path d="M6 18H5a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-1" />
+			<path d="M6 14h12v7H6z" />
+		</svg>
+	);
+}
+
 function CvRow({
 	label,
 	value,
@@ -117,23 +136,27 @@ function CoverPage({
 		<article className="bew-page" ref={pageRef}>
 			<div className="bew-banner bew-banner--cover" />
 			<p className="bew-banner-label bew-banner-label--cover">Bewerbung</p>
-			<div className="bew-cover-heading">
-				{data.jobTitle ? <p className="bew-cover-job-title">{data.jobTitle}</p> : null}
-				{data.companyName ? (
-					<p className="bew-cover-company">bei der {data.companyName}</p>
-				) : null}
-			</div>
-			<img
-				alt={`Porträt von ${data.name}`}
-				className="bew-photo bew-photo--cover"
-				src={data.photoCover}
-			/>
-			<div className="bew-cover-meta">
-				<p className="bew-cover-name">{data.name}</p>
-				<p className="bew-cover-meta-spaced">{data.street}</p>
-				<p>{data.city}</p>
-				<p>{data.phone ? `Mobil: ${data.phone}` : ""}</p>
-				<p>{data.email ? `E-Mail: ${data.email}` : ""}</p>
+			<div className="bew-cover-body">
+				<div className="bew-cover-heading">
+					{data.jobTitle ? (
+						<p className="bew-cover-job-title">{data.jobTitle}</p>
+					) : null}
+					{data.companyName ? (
+						<p className="bew-cover-company">bei der {data.companyName}</p>
+					) : null}
+				</div>
+				<img
+					alt={`Porträt von ${data.name}`}
+					className="bew-photo bew-photo--cover"
+					src={data.photoCover}
+				/>
+				<div className="bew-cover-meta">
+					<p className="bew-cover-name">{data.name}</p>
+					<p className="bew-cover-meta-spaced">{data.street}</p>
+					<p>{data.city}</p>
+					<p>{data.phone ? `Mobil: ${data.phone}` : ""}</p>
+					<p>{data.email ? `E-Mail: ${data.email}` : ""}</p>
+				</div>
 			</div>
 		</article>
 	);
@@ -146,7 +169,10 @@ function LetterPage({
 	data: BewerbungData;
 	pageRef: (node: HTMLElement | null) => void;
 }) {
-	const paragraphs = data.letterBody
+	const paragraphs = applyLetterPlaceholders(
+		data.letterBody,
+		data.companyName
+	)
 		.replace(/\r\n/g, "\n")
 		.split(/\n{2,}/)
 		.map((paragraph) => paragraph.trim())
@@ -368,6 +394,11 @@ function BewerbungAbdurRezzaque() {
 		}, 700);
 	};
 
+	const handlePrint = async () => {
+		await document.fonts.ready;
+		window.print();
+	};
+
 	const handleDownload = async () => {
 		if (isDownloading) return;
 
@@ -419,20 +450,31 @@ function BewerbungAbdurRezzaque() {
 			/>
 
 			<main className="bew-workspace" ref={workspaceRef}>
-				<button
-					aria-label={
-						isDownloading ? "PDF wird erstellt" : "PDF herunterladen"
-					}
-					className="bew-download"
-					disabled={isDownloading}
-					onClick={() => void handleDownload()}
-					title={
-						isDownloading ? "PDF wird erstellt…" : "PDF herunterladen"
-					}
-					type="button"
-				>
-					<DownloadIcon />
-				</button>
+				<div className="bew-actions">
+					<button
+						aria-label={
+							isDownloading ? "PDF wird erstellt" : "PDF herunterladen"
+						}
+						className="bew-action bew-download"
+						disabled={isDownloading}
+						onClick={() => void handleDownload()}
+						title={
+							isDownloading ? "PDF wird erstellt…" : "PDF herunterladen"
+						}
+						type="button"
+					>
+						<DownloadIcon />
+					</button>
+					<button
+						aria-label="Drucken"
+						className="bew-action bew-print"
+						onClick={() => void handlePrint()}
+						title="Drucken"
+						type="button"
+					>
+						<PrintIcon />
+					</button>
+				</div>
 
 				<div
 					className="bew-pages-frame"

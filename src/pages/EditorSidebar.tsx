@@ -128,18 +128,6 @@ function EditorSidebar({
 		onChange({ ...data, ...partial });
 	};
 
-	const setCompanyName = (companyName: string) => {
-		const previous = data.companyName.trim();
-		onChange({
-			...data,
-			companyName,
-			letterBody:
-				previous && companyName
-					? data.letterBody.split(previous).join(companyName)
-					: data.letterBody,
-		});
-	};
-
 	const setJob = (id: string, partial: Partial<Job>) => {
 		onChange({
 			...data,
@@ -255,7 +243,7 @@ function EditorSidebar({
 							<Field
 								id="person-company"
 								label="Unternehmen"
-								onChange={setCompanyName}
+								onChange={(companyName) => patch({ companyName })}
 								value={data.companyName}
 							/>
 							<PhotoField
@@ -288,7 +276,7 @@ function EditorSidebar({
 							<Field
 								id="letter-company"
 								label="Unternehmen"
-								onChange={setCompanyName}
+								onChange={(companyName) => patch({ companyName })}
 								value={data.companyName}
 							/>
 							<Field

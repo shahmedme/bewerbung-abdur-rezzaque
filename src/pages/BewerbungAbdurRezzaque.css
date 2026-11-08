@@ -256,11 +256,16 @@
 	overflow-x: auto;
 }
 
-.bew-download {
+.bew-actions {
 	position: fixed;
 	top: 1.25rem;
 	right: 1.25rem;
 	z-index: 50;
+	display: flex;
+	gap: 0.65rem;
+}
+
+.bew-action {
 	display: grid;
 	width: 3.25rem;
 	height: 3.25rem;
@@ -275,24 +280,24 @@
 	transition: transform 150ms ease, box-shadow 150ms ease;
 }
 
-.bew-download:hover:not(:disabled) {
+.bew-action:hover:not(:disabled) {
 	box-shadow: 0 13px 32px rgb(0 0 0 / 25%);
 	transform: translateY(-2px);
 }
 
-.bew-download:focus-visible,
+.bew-action:focus-visible,
 .bew-sidebar-close:focus-visible,
 .bew-sidebar-open:focus-visible {
 	outline: 3px solid rgb(68 84 106 / 45%);
 	outline-offset: 3px;
 }
 
-.bew-download:disabled {
+.bew-action:disabled {
 	cursor: wait;
 	opacity: 0.65;
 }
 
-.bew-download svg {
+.bew-action svg {
 	width: 1.35rem;
 	height: 1.35rem;
 }
@@ -394,11 +399,23 @@
 	object-fit: cover;
 }
 
+.bew-cover-body {
+	position: absolute;
+	inset: 0;
+	z-index: 3;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+}
+
 .bew-photo--cover {
-	top: 208pt;
-	left: 234.65pt;
+	position: relative;
+	top: auto;
+	left: auto;
 	width: 125.8pt;
 	height: 188.59pt;
+	margin-top: 46.75pt;
 }
 
 .bew-photo--cv {
@@ -409,11 +426,8 @@
 }
 
 .bew-cover-heading {
-	position: absolute;
-	top: 126pt;
-	left: 36pt;
-	right: 36pt;
-	z-index: 3;
+	width: 100%;
+	padding: 0 36pt;
 	color: #44546a;
 	text-align: center;
 	font-family: "Open Sans", Arial, sans-serif;
@@ -438,11 +452,8 @@
 }
 
 .bew-cover-meta {
-	position: absolute;
-	top: 442pt;
-	left: 0;
-	right: 0;
-	z-index: 3;
+	width: 100%;
+	margin-top: 45.41pt;
 	color: #404040;
 	font-size: 13px;
 	line-height: 1.309;
@@ -619,7 +630,7 @@
 		padding: 1rem;
 	}
 
-	.bew-download {
+	.bew-actions {
 		top: 0.75rem;
 		right: 0.75rem;
 	}
@@ -643,15 +654,18 @@
 	.bew-workspace {
 		margin: 0;
 		padding: 0;
+		width: auto;
+		height: auto;
+		min-height: 0;
+		overflow: visible;
 		background: #fff;
 		display: block;
-		min-height: 0;
 	}
 
 	.bew-sidebar,
 	.bew-sidebar-open,
-	.bew-download {
-		display: none;
+	.bew-actions {
+		display: none !important;
 	}
 
 	.bew-pages-frame {
@@ -662,18 +676,25 @@
 
 	.bew-pages {
 		display: block;
-		width: auto;
+		width: 595.32pt;
+		margin: 0;
+		gap: 0;
 		transform: none !important;
 	}
 
 	.bew-page {
 		box-shadow: none;
+		overflow: hidden;
 		break-after: page;
+		break-inside: avoid;
+		page-break-after: always;
+		page-break-inside: avoid;
 		-webkit-print-color-adjust: exact;
 		print-color-adjust: exact;
 	}
 
 	.bew-page:last-child {
 		break-after: auto;
+		page-break-after: auto;
 	}
 }

@@ -51,7 +51,7 @@ export const defaultData: BewerbungData = {
 	date: "08.11.2026",
 	letterGreeting: "Sehr geehrte Damen und Herren,",
 	letterBody:
-		"Ihr Unternehmen ist mir als erfolgreicher Produzent sehr gut bekannt. Nachdem ich mittlerweile seit vielen Jahren in einem mittelständischen Betrieb der kunststoffverarbeitenden Industrie tätig bin, möchte ich nun den nächsten Schritt gehen. Ich sehe durch Ihre Marktposition sehr gute Möglichkeiten, in einem großen Unternehmen zu arbeiten, mit dem ich wachsen kann. Ihre Internetseite hat mich zudem davon überzeugt, dass ich mit meinem Wissen und meinen Fähigkeiten Teil eines Teams werden kann, das die Unternehmensziele mit großer Leidenschaft vertritt aber auch durch Wertschätzung für den Einzelnen geprägt wird.\n\nIch möchte meine Erfahrung in der Produktion einbringen. In meiner bisherigen Tätigkeit als Maschinenbediener und Schichtführer konnte ich umfassende Kenntnisse im Umgang mit Siebdruckmaschinen und Etikettiermaschinen erwerben. Ich bin überzeugt, dass dieses Wissen für die Aufgabe sehr nützlich sein wird.\n\nAus meinem Lebenslauf können Sie ersehen, dass ich darüber hinaus Erfahrung als Lagerhelfer und Packer habe. Diese Praxiskenntnisse sind sicher ebenfalls wichtig. Mir fällt es leicht, Neues zu lernen und so erhoffe ich mir von der Arbeit für ein so renommiertes Unternehmen wie auch die kontinuierliche L-TEC Brabender GmbH & Co. KG Erweiterung meines Wissens.\n\nVolles Engagement für meine Aufgaben, Belastbarkeit und Zuverlässigkeit in allen Details meines Aufgabengebietes sind für mich eine Selbstverständlichkeit.\n\nIch bin überzeugt davon, dass ich viel zum Erfolg Ihres Unternehmens beitragen kann. Ich würde mich über die Gelegenheit freuen, L-TEC Brabender GmbH & Co. KG bei einem persönlichen Gespräch näher kennenzulernen.",
+		"Ihr Unternehmen ist mir als erfolgreicher Produzent sehr gut bekannt. Nachdem ich mittlerweile seit vielen Jahren in einem mittelständischen Betrieb der kunststoffverarbeitenden Industrie tätig bin, möchte ich nun den nächsten Schritt gehen. Ich sehe durch Ihre Marktposition sehr gute Möglichkeiten, in einem großen Unternehmen zu arbeiten, mit dem ich wachsen kann. Ihre Internetseite hat mich zudem davon überzeugt, dass ich mit meinem Wissen und meinen Fähigkeiten Teil eines Teams werden kann, das die Unternehmensziele mit großer Leidenschaft vertritt aber auch durch Wertschätzung für den Einzelnen geprägt wird.\n\nIch möchte meine Erfahrung in der Produktion einbringen. In meiner bisherigen Tätigkeit als Maschinenbediener und Schichtführer konnte ich umfassende Kenntnisse im Umgang mit Siebdruckmaschinen und Etikettiermaschinen erwerben. Ich bin überzeugt, dass dieses Wissen für die Aufgabe sehr nützlich sein wird.\n\nAus meinem Lebenslauf können Sie ersehen, dass ich darüber hinaus Erfahrung als Lagerhelfer und Packer habe. Diese Praxiskenntnisse sind sicher ebenfalls wichtig. Mir fällt es leicht, Neues zu lernen und so erhoffe ich mir von der Arbeit für ein so renommiertes Unternehmen wie auch die kontinuierliche [UNTERNEHMEN] Erweiterung meines Wissens.\n\nVolles Engagement für meine Aufgaben, Belastbarkeit und Zuverlässigkeit in allen Details meines Aufgabengebietes sind für mich eine Selbstverständlichkeit.\n\nIch bin überzeugt davon, dass ich viel zum Erfolg Ihres Unternehmens beitragen kann. Ich würde mich über die Gelegenheit freuen, [UNTERNEHMEN] bei einem persönlichen Gespräch näher kennenzulernen.",
 	letterClosing: "Mit freundlichen Grüßen",
 	jobs: [
 		{
@@ -104,6 +104,24 @@ export const defaultData: BewerbungData = {
 
 export const STORAGE_KEY = "bewerbung-abdur-rezzaque:data";
 export const SIDEBAR_STORAGE_KEY = "bewerbung-abdur-rezzaque:sidebar-open";
+export const COMPANY_TOKEN = "[UNTERNEHMEN]";
+
+const COMPANY_TOKEN_PATTERN =
+	/\[UNTERNEHMEN\]|__UNTERNEHMEN__|__UNTERHMEN__|\{\{UNTERNEHMEN\}\}|UNTERNEHMEN/g;
+
+export function applyLetterPlaceholders(text: string, companyName: string) {
+	return text.replace(COMPANY_TOKEN_PATTERN, companyName);
+}
+
+export function toLetterTemplate(text: string, companyName: string) {
+	let next = text.replace(COMPANY_TOKEN_PATTERN, COMPANY_TOKEN);
+	for (const name of [companyName, defaultData.companyName]) {
+		const trimmed = name.trim();
+		if (!trimmed || trimmed === COMPANY_TOKEN) continue;
+		next = next.split(trimmed).join(COMPANY_TOKEN);
+	}
+	return next;
+}
 
 function isJob(value: unknown): value is Job {
 	if (!value || typeof value !== "object") return false;
@@ -124,9 +142,17 @@ export function normalizeBewerbungData(value: unknown): BewerbungData {
 		? raw.jobs.filter(isJob)
 		: defaultData.jobs;
 
+	const companyName = raw.companyName || defaultData.companyName;
+	const letterBody = toLetterTemplate(
+		raw.letterBody ?? defaultData.letterBody,
+		companyName
+	);
+
 	return {
 		...defaultData,
 		...raw,
+		companyName,
+		letterBody,
 		jobTitle: raw.jobTitle || defaultData.jobTitle,
 		jobs: jobs.length > 0 ? jobs : defaultData.jobs,
 		photoCover: raw.photoCover || defaultData.photoCover,
