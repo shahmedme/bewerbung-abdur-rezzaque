@@ -101,6 +101,7 @@ export const defaultData: BewerbungData = {
 };
 
 export const STORAGE_KEY = "bewerbung-abdur-rezzaque:data";
+export const SIDEBAR_STORAGE_KEY = "bewerbung-abdur-rezzaque:sidebar-open";
 
 function isJob(value: unknown): value is Job {
 	if (!value || typeof value !== "object") return false;
@@ -143,6 +144,24 @@ export function loadBewerbungData(): BewerbungData {
 export function saveBewerbungData(data: BewerbungData) {
 	try {
 		localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+	} catch {
+		// Ignore quota / private-mode failures.
+	}
+}
+
+export function loadSidebarOpen(): boolean {
+	try {
+		const stored = localStorage.getItem(SIDEBAR_STORAGE_KEY);
+		if (stored === null) return false;
+		return stored === "true";
+	} catch {
+		return false;
+	}
+}
+
+export function saveSidebarOpen(open: boolean) {
+	try {
+		localStorage.setItem(SIDEBAR_STORAGE_KEY, String(open));
 	} catch {
 		// Ignore quota / private-mode failures.
 	}

@@ -4,7 +4,9 @@ import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from
 import {
 	fileNameFromName,
 	loadBewerbungData,
+	loadSidebarOpen,
 	saveBewerbungData,
+	saveSidebarOpen,
 	type BewerbungData,
 } from "../bewerbung/data";
 import "./BewerbungAbdurRezzaque.css";
@@ -262,7 +264,7 @@ function BewerbungAbdurRezzaque() {
 	const pageRefs = useRef<Array<HTMLElement | null>>([]);
 	const workspaceRef = useRef<HTMLElement | null>(null);
 	const [data, setData] = useState<BewerbungData>(() => loadBewerbungData());
-	const [sidebarOpen, setSidebarOpen] = useState(true);
+	const [sidebarOpen, setSidebarOpen] = useState(() => loadSidebarOpen());
 	const [activeTab, setActiveTab] = useState<TabId>("personal");
 	const [isDownloading, setIsDownloading] = useState(false);
 	const [previewScale, setPreviewScale] = useState(1);
@@ -273,6 +275,10 @@ function BewerbungAbdurRezzaque() {
 	useEffect(() => {
 		saveBewerbungData(data);
 	}, [data]);
+
+	useEffect(() => {
+		saveSidebarOpen(sidebarOpen);
+	}, [sidebarOpen]);
 
 	useEffect(() => {
 		const previousTitle = document.title;
