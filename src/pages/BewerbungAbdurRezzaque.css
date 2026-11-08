@@ -510,6 +510,14 @@
 	font-weight: 700;
 }
 
+.bew-letter-text .bew-company-mark {
+	color: #c00000;
+}
+
+.bew-app.is-exporting .bew-letter-text .bew-company-mark {
+	color: inherit;
+}
+
 .bew-letter-closing {
 	margin-bottom: 20px !important;
 }
@@ -666,6 +674,10 @@
 	.bew-sidebar-open,
 	.bew-actions {
 		display: none !important;
+	}
+
+	.bew-letter-text .bew-company-mark {
+		color: inherit;
 	}
 
 	.bew-pages-frame {

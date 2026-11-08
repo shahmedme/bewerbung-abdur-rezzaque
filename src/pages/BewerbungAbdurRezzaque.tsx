@@ -6,7 +6,9 @@ import {
 	useRef,
 	useState,
 	type CSSProperties,
+	type ReactNode,
 } from "react";
+import { flushSync } from "react-dom";
 import {
 	applyLetterPlaceholders,
 	fileNameFromName,
@@ -162,6 +164,27 @@ function CoverPage({
 	);
 }
 
+function highlightCompanyName(text: string, companyName: string): ReactNode {
+	const name = companyName.trim();
+	if (!name) return text;
+
+	const parts = text.split(name);
+	if (parts.length === 1) return text;
+
+	const nodes: ReactNode[] = [];
+	parts.forEach((part, index) => {
+		if (index > 0) {
+			nodes.push(
+				<span className="bew-company-mark" key={`company-${index}`}>
+					{name}
+				</span>
+			);
+		}
+		if (part) nodes.push(part);
+	});
+	return nodes;
+}
+
 function LetterPage({
 	data,
 	pageRef,
@@ -182,16 +205,16 @@ function LetterPage({
 		<article className="bew-page" ref={pageRef}>
 			<div className="bew-banner bew-banner--letter" />
 			<p className="bew-banner-label bew-banner-label--letter">Anschreiben</p>
-			<T left={70.82} top={35.43} size={12}>
+			<T left={70.82} top={35.43}>
 				{data.name}
 			</T>
-			<T left={70.82} top={48.99} size={12}>
+			<T left={70.82} top={48.99}>
 				{[data.street, data.city].filter(Boolean).join(", ")}
 			</T>
-			<T left={70.82} top={62.67} size={12}>
+			<T left={70.82} top={62.67}>
 				{data.phone ? `Mobil: ${data.phone}` : ""}
 			</T>
-			<T left={70.82} top={76.25} size={12}>
+			<T left={70.82} top={76.25}>
 				{data.email ? `E-Mail: ${data.email}` : ""}
 			</T>
 			<T left={70.82} top={135.91}>
@@ -210,7 +233,9 @@ function LetterPage({
 				) : null}
 				{data.letterGreeting ? <p>{data.letterGreeting}</p> : null}
 				{paragraphs.map((paragraph, index) => (
-					<p key={`${index}-${paragraph.slice(0, 24)}`}>{paragraph}</p>
+					<p key={`${index}-${paragraph.slice(0, 24)}`}>
+						{highlightCompanyName(paragraph, data.companyName)}
+					</p>
 				))}
 				{data.letterClosing ? (
 					<p className="bew-letter-closing">{data.letterClosing}</p>
@@ -402,7 +427,9 @@ function BewerbungAbdurRezzaque() {
 	const handleDownload = async () => {
 		if (isDownloading) return;
 
-		setIsDownloading(true);
+		flushSync(() => {
+			setIsDownloading(true);
+		});
 		try {
 			await document.fonts.ready;
 			const pdf = new jsPDF({
@@ -439,7 +466,11 @@ function BewerbungAbdurRezzaque() {
 	};
 
 	return (
-		<div className={`bew-app${sidebarOpen ? "" : " is-sidebar-collapsed"}`}>
+		<div
+			className={`bew-app${sidebarOpen ? "" : " is-sidebar-collapsed"}${
+				isDownloading ? " is-exporting" : ""
+			}`}
+		>
 			<EditorSidebar
 				data={data}
 				onChange={setData}
