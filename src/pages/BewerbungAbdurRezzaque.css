@@ -389,7 +389,7 @@
 	right: 0;
 	z-index: 3;
 	color: #404040;
-	font-size: 8.04pt;
+	font-size: 14px;
 	line-height: 1.309;
 	text-align: center;
 }
@@ -400,11 +400,11 @@
 
 .bew-cover-meta-spaced {
 	margin-top: 27.3pt;
-	line-height: 18.84pt;
+	line-height: 24px;
 }
 
 .bew-cover-meta-spaced ~ p {
-	line-height: 18.84pt;
+	line-height: 24px;
 }
 
 .bew-letter-date {
@@ -414,7 +414,7 @@
 	z-index: 3;
 	margin: 0;
 	color: #404040;
-	font-size: 8.04pt;
+	font-size: 14px;
 	line-height: 1.309;
 }
 
@@ -425,16 +425,16 @@
 	width: 453.68pt;
 	z-index: 3;
 	color: #404040;
-	font-size: 8.04pt;
-	line-height: 10.92pt;
+	font-size: 14px;
+	line-height: 19px;
 }
 
 .bew-letter-text p {
-	margin: 0 0 10.8pt;
+	margin: 0 0 14px;
 }
 
 .bew-letter-closing {
-	margin-bottom: 17pt !important;
+	margin-bottom: 22px !important;
 }
 
 .bew-cv-body {
@@ -443,7 +443,7 @@
 	left: 70.82pt;
 	right: 70.82pt;
 	z-index: 3;
-	font-size: 8.04pt;
+	font-size: 14px;
 	line-height: 1.309;
 }
 
@@ -462,7 +462,7 @@
 .bew-cv-section-head h3 {
 	margin: 0;
 	color: #44546a;
-	font-size: 8.04pt;
+	font-size: 14px;
 	font-weight: 700;
 	line-height: 1.309;
 	text-align: right;
@@ -482,7 +482,7 @@
 }
 
 .bew-cv-personal .bew-cv-row {
-	min-height: 18.9pt;
+	min-height: 24px;
 	align-items: start;
 }
 
@@ -517,7 +517,7 @@
 }
 
 .bew-cv-job .bew-cv-row {
-	line-height: 10.92pt;
+	line-height: 19px;
 }
 
 .bew-cv-job .bew-cv-label {
@@ -529,7 +529,7 @@
 	top: 788.9pt;
 	left: 70.82pt;
 	margin: 0;
-	font-size: 8.04pt;
+	font-size: 14px;
 	line-height: 1.309;
 }
 
