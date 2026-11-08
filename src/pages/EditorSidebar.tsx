@@ -193,6 +193,18 @@ function EditorSidebar({
 							role="tabpanel"
 						>
 							<Field
+								id="person-job-title"
+								label="Stellenbezeichnung"
+								onChange={(jobTitle) => patch({ jobTitle })}
+								value={data.jobTitle}
+							/>
+							<Field
+								id="person-company"
+								label="Unternehmen"
+								onChange={(companyName) => patch({ companyName })}
+								value={data.companyName}
+							/>
+							<Field
 								id="person-name"
 								label="Name"
 								onChange={(name) => patch({ name })}
@@ -233,18 +245,6 @@ function EditorSidebar({
 								label="Familienstand"
 								onChange={(maritalStatus) => patch({ maritalStatus })}
 								value={data.maritalStatus}
-							/>
-							<Field
-								id="person-job-title"
-								label="Stellenbezeichnung"
-								onChange={(jobTitle) => patch({ jobTitle })}
-								value={data.jobTitle}
-							/>
-							<Field
-								id="person-company"
-								label="Unternehmen"
-								onChange={(companyName) => patch({ companyName })}
-								value={data.companyName}
 							/>
 							<PhotoField
 								fallback={defaultData.photoCover}
