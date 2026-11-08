@@ -32,7 +32,7 @@ type TextProps = {
 function T({
 	left,
 	top,
-	size = 10.5,
+	size = 9.75,
 	bold = false,
 	color = BODY,
 	z,
@@ -111,7 +111,7 @@ function CoverPage({
 	return (
 		<article className="bew-page" ref={pageRef}>
 			<div className="bew-banner bew-banner--cover" />
-			<T left={431.62} top={50.63} size={18} color={WHITE}>
+			<T left={431.62} top={50.63} size={16.75} color={WHITE}>
 				Bewerbung
 			</T>
 			<img
@@ -146,19 +146,19 @@ function LetterPage({
 	return (
 		<article className="bew-page" ref={pageRef}>
 			<div className="bew-banner bew-banner--letter" />
-			<T left={431.62} top={50.63} size={18} color={WHITE}>
+			<T left={431.62} top={50.63} size={16.75} color={WHITE}>
 				Anschreiben
 			</T>
-			<T left={70.82} top={35.43} size={13}>
+			<T left={70.82} top={35.43} size={12}>
 				{data.name}
 			</T>
-			<T left={70.82} top={48.99} size={13}>
+			<T left={70.82} top={48.99} size={12}>
 				{[data.street, data.city].filter(Boolean).join(", ")}
 			</T>
-			<T left={70.82} top={62.67} size={13}>
+			<T left={70.82} top={62.67} size={12}>
 				{data.phone ? `Mobil: ${data.phone}` : ""}
 			</T>
-			<T left={70.82} top={76.25} size={13}>
+			<T left={70.82} top={76.25} size={12}>
 				{data.email ? `E-Mail: ${data.email}` : ""}
 			</T>
 			<T left={70.82} top={135.91}>
@@ -195,7 +195,7 @@ function CvPage({
 	return (
 		<article className="bew-page" ref={pageRef}>
 			<div className="bew-banner bew-banner--cv" />
-			<T left={407.2} top={50.03} size={18} color={WHITE}>
+			<T left={407.2} top={50.03} size={16.75} color={WHITE}>
 				 Lebenslauf
 			</T>
 			<img
