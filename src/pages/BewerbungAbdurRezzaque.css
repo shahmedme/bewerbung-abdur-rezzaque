@@ -272,9 +272,7 @@
 	box-shadow: 0 10px 28px rgb(0 0 0 / 20%);
 	color: #171719;
 	cursor: pointer;
-	transition:
-		transform 150ms ease,
-		box-shadow 150ms ease;
+	transition: transform 150ms ease, box-shadow 150ms ease;
 }
 
 .bew-download:hover:not(:disabled) {
@@ -351,6 +349,34 @@
 	height: 99.9pt;
 }
 
+.bew-banner-label {
+	position: absolute;
+	z-index: 3;
+	margin: 0;
+	padding: 0;
+	color: #fff;
+	font-family: "Open Sans", Arial, sans-serif;
+	font-kerning: normal;
+	font-size: 16.75pt;
+	font-weight: 400;
+	line-height: 1.309;
+	text-align: center;
+	white-space: nowrap;
+}
+
+.bew-banner-label--cover,
+.bew-banner-label--letter {
+	top: 50.63pt;
+	left: 401.15pt;
+	width: 147.64pt;
+}
+
+.bew-banner-label--cv {
+	top: 50.03pt;
+	left: 376.7pt;
+	width: 147.8pt;
+}
+
 .bew-text {
 	position: absolute;
 	z-index: 3;
@@ -369,7 +395,7 @@
 }
 
 .bew-photo--cover {
-	top: 146.43pt;
+	top: 208pt;
 	left: 234.65pt;
 	width: 125.8pt;
 	height: 188.59pt;
@@ -382,9 +408,38 @@
 	height: 131.55pt;
 }
 
+.bew-cover-heading {
+	position: absolute;
+	top: 126pt;
+	left: 36pt;
+	right: 36pt;
+	z-index: 3;
+	color: #44546a;
+	text-align: center;
+	font-family: "Open Sans", Arial, sans-serif;
+}
+
+.bew-cover-job-title {
+	margin: 0;
+	color: #44546a;
+	font-size: 20px;
+	font-weight: 700;
+	letter-spacing: 0.01em;
+	line-height: 1.2;
+}
+
+.bew-cover-company {
+	margin: 3px 0 0;
+	color: #44546a;
+	font-size: 16px;
+	font-weight: 600;
+	letter-spacing: 0.01em;
+	line-height: 1.25;
+}
+
 .bew-cover-meta {
 	position: absolute;
-	top: 381.22pt;
+	top: 442pt;
 	left: 0;
 	right: 0;
 	z-index: 3;
@@ -396,6 +451,12 @@
 
 .bew-cover-meta p {
 	margin: 0;
+}
+
+.bew-cover-name {
+	font-size: 15px;
+	font-weight: 400;
+	letter-spacing: 0.01em;
 }
 
 .bew-cover-meta-spaced {
@@ -431,6 +492,11 @@
 
 .bew-letter-text p {
 	margin: 0 0 13px;
+}
+
+.bew-letter-subject {
+	color: #44546a;
+	font-weight: 700;
 }
 
 .bew-letter-closing {

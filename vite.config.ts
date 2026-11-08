@@ -16,7 +16,7 @@ export default defineConfig({
 				name: "Bewerbung — Abdur Rezzaque",
 				short_name: "Bewerbung",
 				description:
-					"German application documents: cover page, Anschreiben, and Lebenslauf.",
+					"Bewerbungsunterlagen: Deckblatt, Anschreiben und Lebenslauf.",
 				theme_color: "#44546a",
 				background_color: "#d8d8d8",
 				display: "standalone",

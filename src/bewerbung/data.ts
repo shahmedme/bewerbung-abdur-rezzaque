@@ -19,6 +19,7 @@ export type BewerbungData = {
 	maritalStatus: string;
 	photoCover: string;
 	photoCv: string;
+	jobTitle: string;
 	companyName: string;
 	companyStreet: string;
 	companyCity: string;
@@ -43,13 +44,14 @@ export const defaultData: BewerbungData = {
 	maritalStatus: "geschieden",
 	photoCover: portraitCover,
 	photoCv: portraitCv,
-	companyName: "Hadey Industries",
-	companyStreet: "Schimmelbuschstraße 3",
-	companyCity: "40699 Erkrath-Hochdahl, Germany",
+	jobTitle: "Bewerbung als Siebdrucker",
+	companyName: "L-TEC Brabender GmbH & Co. KG",
+	companyStreet: "Steinendorfer Str. 61-62",
+	companyCity: "42699 Solingen",
 	date: "08.11.2026",
 	letterGreeting: "Sehr geehrte Damen und Herren,",
 	letterBody:
-		"Ihr Unternehmen ist mir als erfolgreicher Produzent sehr gut bekannt. Nachdem ich mittlerweile seit vielen Jahren in einem mittelständischen Betrieb der kunststoffverarbeitenden Industrie tätig bin, möchte ich nun den nächsten Schritt gehen. Ich sehe durch Ihre Marktposition sehr gute Möglichkeiten, in einem großen Unternehmen zu arbeiten, mit dem ich wachsen kann. Ihre Internetseite hat mich zudem davon überzeugt, dass ich mit meinem Wissen und meinen Fähigkeiten Teil eines Teams werden kann, das die Unternehmensziele mit großer Leidenschaft vertritt aber auch durch Wertschätzung für den Einzelnen geprägt wird.\n\nIch möchte meine Erfahrung in der Produktion einbringen. In meiner bisherigen Tätigkeit als Maschinenbediener und Schichtführer konnte ich umfassende Kenntnisse im Umgang mit Siebdruckmaschinen und Etikettiermaschinen erwerben. Ich bin überzeugt, dass dieses Wissen für die Aufgabe sehr nützlich sein wird.\n\nAus meinem Lebenslauf können Sie ersehen, dass ich darüber hinaus Erfahrung als Lagerhelfer und Packer habe. Diese Praxiskenntnisse sind sicher ebenfalls wichtig. Mir fällt es leicht, Neues zu lernen und so erhoffe ich mir von der Arbeit für ein so renommiertes Unternehmen wie auch die kontinuierliche Hadey Industries Erweiterung meines Wissens.\n\nVolles Engagement für meine Aufgaben, Belastbarkeit und Zuverlässigkeit in allen Details meines Aufgabengebietes sind für mich eine Selbstverständlichkeit.\n\nIch bin überzeugt davon, dass ich viel zum Erfolg Ihres Unternehmens beitragen kann. Ich würde mich über die Gelegenheit freuen, Hadey Industries bei einem persönlichen Gespräch näher kennenzulernen.",
+		"Ihr Unternehmen ist mir als erfolgreicher Produzent sehr gut bekannt. Nachdem ich mittlerweile seit vielen Jahren in einem mittelständischen Betrieb der kunststoffverarbeitenden Industrie tätig bin, möchte ich nun den nächsten Schritt gehen. Ich sehe durch Ihre Marktposition sehr gute Möglichkeiten, in einem großen Unternehmen zu arbeiten, mit dem ich wachsen kann. Ihre Internetseite hat mich zudem davon überzeugt, dass ich mit meinem Wissen und meinen Fähigkeiten Teil eines Teams werden kann, das die Unternehmensziele mit großer Leidenschaft vertritt aber auch durch Wertschätzung für den Einzelnen geprägt wird.\n\nIch möchte meine Erfahrung in der Produktion einbringen. In meiner bisherigen Tätigkeit als Maschinenbediener und Schichtführer konnte ich umfassende Kenntnisse im Umgang mit Siebdruckmaschinen und Etikettiermaschinen erwerben. Ich bin überzeugt, dass dieses Wissen für die Aufgabe sehr nützlich sein wird.\n\nAus meinem Lebenslauf können Sie ersehen, dass ich darüber hinaus Erfahrung als Lagerhelfer und Packer habe. Diese Praxiskenntnisse sind sicher ebenfalls wichtig. Mir fällt es leicht, Neues zu lernen und so erhoffe ich mir von der Arbeit für ein so renommiertes Unternehmen wie auch die kontinuierliche L-TEC Brabender GmbH & Co. KG Erweiterung meines Wissens.\n\nVolles Engagement für meine Aufgaben, Belastbarkeit und Zuverlässigkeit in allen Details meines Aufgabengebietes sind für mich eine Selbstverständlichkeit.\n\nIch bin überzeugt davon, dass ich viel zum Erfolg Ihres Unternehmens beitragen kann. Ich würde mich über die Gelegenheit freuen, L-TEC Brabender GmbH & Co. KG bei einem persönlichen Gespräch näher kennenzulernen.",
 	letterClosing: "Mit freundlichen Grüßen",
 	jobs: [
 		{
@@ -125,6 +127,7 @@ export function normalizeBewerbungData(value: unknown): BewerbungData {
 	return {
 		...defaultData,
 		...raw,
+		jobTitle: raw.jobTitle || defaultData.jobTitle,
 		jobs: jobs.length > 0 ? jobs : defaultData.jobs,
 		photoCover: raw.photoCover || defaultData.photoCover,
 		photoCv: raw.photoCv || defaultData.photoCv,

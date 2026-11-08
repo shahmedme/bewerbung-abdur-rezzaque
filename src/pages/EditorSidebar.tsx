@@ -9,7 +9,7 @@ import {
 export type TabId = "personal" | "anschreiben" | "lebenslauf";
 
 export const TABS: Array<{ id: TabId; label: string }> = [
-	{ id: "personal", label: "Personal" },
+	{ id: "personal", label: "Persönlich" },
 	{ id: "anschreiben", label: "Anschreiben" },
 	{ id: "lebenslauf", label: "Lebenslauf" },
 ];
@@ -95,15 +95,12 @@ function PhotoField({
 			<div className="bew-photo-field-row">
 				<img alt="" src={value} />
 				<div className="bew-photo-field-actions">
-					<button
-						onClick={() => inputRef.current?.click()}
-						type="button"
-					>
-						Replace
+					<button onClick={() => inputRef.current?.click()} type="button">
+						Ersetzen
 					</button>
 					{value !== fallback ? (
 						<button onClick={() => onChange(fallback)} type="button">
-							Reset
+							Zurücksetzen
 						</button>
 					) : null}
 				</div>
@@ -156,18 +153,18 @@ function EditorSidebar({
 		<>
 			<aside
 				aria-hidden={!open}
-				aria-label="Edit application"
+				aria-label="Bewerbung bearbeiten"
 				className={`bew-sidebar${open ? "" : " is-collapsed"}`}
 				inert={!open}
 			>
 				<div className="bew-sidebar-inner">
 					<header className="bew-sidebar-head">
 						<div>
-							<p className="bew-sidebar-kicker">Editor</p>
-							<h1>Application details</h1>
+							<p className="bew-sidebar-kicker">Bearbeiten</p>
+							<h1>Bewerbungsdaten</h1>
 						</div>
 						<button
-							aria-label="Collapse editor"
+							aria-label="Seitenleiste schließen"
 							className="bew-sidebar-close"
 							onClick={onToggle}
 							type="button"
@@ -176,11 +173,7 @@ function EditorSidebar({
 						</button>
 					</header>
 
-					<div
-						aria-label="Editor sections"
-						className="bew-tabs"
-						role="tablist"
-					>
+					<div aria-label="Abschnitte" className="bew-tabs" role="tablist">
 						{TABS.map((item) => {
 							const selected = tab === item.id;
 							return (
@@ -219,49 +212,61 @@ function EditorSidebar({
 							/>
 							<Field
 								id="person-street"
-								label="Street"
+								label="Straße"
 								onChange={(street) => patch({ street })}
 								value={data.street}
 							/>
 							<Field
 								id="person-city"
-								label="ZIP / City"
+								label="PLZ / Ort"
 								onChange={(city) => patch({ city })}
 								value={data.city}
 							/>
 							<Field
 								id="person-phone"
-								label="Mobile"
+								label="Mobil"
 								onChange={(phone) => patch({ phone })}
 								value={data.phone}
 							/>
 							<Field
 								id="person-email"
-								label="E-mail"
+								label="E-Mail"
 								onChange={(email) => patch({ email })}
 								value={data.email}
 							/>
 							<Field
 								id="person-birth"
-								label="Date of birth / place"
+								label="Geburtsdatum / -ort"
 								onChange={(birth) => patch({ birth })}
 								value={data.birth}
 							/>
 							<Field
 								id="person-status"
-								label="Marital status"
+								label="Familienstand"
 								onChange={(maritalStatus) => patch({ maritalStatus })}
 								value={data.maritalStatus}
 							/>
+							<Field
+								id="person-job-title"
+								label="Stellenbezeichnung"
+								onChange={(jobTitle) => patch({ jobTitle })}
+								value={data.jobTitle}
+							/>
+							<Field
+								id="person-company"
+								label="Unternehmen"
+								onChange={setCompanyName}
+								value={data.companyName}
+							/>
 							<PhotoField
 								fallback={defaultData.photoCover}
-								label="Cover photo"
+								label="Foto Deckblatt"
 								onChange={(photoCover) => patch({ photoCover })}
 								value={data.photoCover}
 							/>
 							<PhotoField
 								fallback={defaultData.photoCv}
-								label="CV photo"
+								label="Foto Lebenslauf"
 								onChange={(photoCv) => patch({ photoCv })}
 								value={data.photoCv}
 							/>
@@ -275,38 +280,44 @@ function EditorSidebar({
 							role="tabpanel"
 						>
 							<Field
+								id="letter-job-title"
+								label="Stellenbezeichnung"
+								onChange={(jobTitle) => patch({ jobTitle })}
+								value={data.jobTitle}
+							/>
+							<Field
 								id="letter-company"
-								label="Company"
+								label="Unternehmen"
 								onChange={setCompanyName}
 								value={data.companyName}
 							/>
 							<Field
 								id="letter-company-street"
-								label="Company street"
+								label="Straße (Unternehmen)"
 								onChange={(companyStreet) => patch({ companyStreet })}
 								value={data.companyStreet}
 							/>
 							<Field
 								id="letter-company-city"
-								label="Company city"
+								label="Ort (Unternehmen)"
 								onChange={(companyCity) => patch({ companyCity })}
 								value={data.companyCity}
 							/>
 							<Field
 								id="letter-date"
-								label="Date"
+								label="Datum"
 								onChange={(date) => patch({ date })}
 								value={data.date}
 							/>
 							<Field
 								id="letter-greeting"
-								label="Greeting"
+								label="Anrede"
 								onChange={(letterGreeting) => patch({ letterGreeting })}
 								value={data.letterGreeting}
 							/>
 							<Field
 								id="letter-body"
-								label="Letter body"
+								label="Anschreiben-Text"
 								multiline
 								onChange={(letterBody) => patch({ letterBody })}
 								rows={14}
@@ -314,7 +325,7 @@ function EditorSidebar({
 							/>
 							<Field
 								id="letter-closing"
-								label="Closing"
+								label="Grußformel"
 								onChange={(letterClosing) => patch({ letterClosing })}
 								value={data.letterClosing}
 							/>
@@ -332,25 +343,25 @@ function EditorSidebar({
 									<legend>Position {index + 1}</legend>
 									<Field
 										id={`${job.id}-period`}
-										label="Period"
+										label="Zeitraum"
 										onChange={(period) => setJob(job.id, { period })}
 										value={job.period}
 									/>
 									<Field
 										id={`${job.id}-title`}
-										label="Title"
+										label="Berufsbezeichnung"
 										onChange={(title) => setJob(job.id, { title })}
 										value={job.title}
 									/>
 									<Field
 										id={`${job.id}-company`}
-										label="Company"
+										label="Unternehmen"
 										onChange={(company) => setJob(job.id, { company })}
 										value={job.company}
 									/>
 									<Field
 										id={`${job.id}-duties`}
-										label="Duties"
+										label="Aufgabenbereiche"
 										multiline
 										onChange={(duties) => setJob(job.id, { duties })}
 										rows={3}
@@ -367,7 +378,7 @@ function EditorSidebar({
 											}
 											type="button"
 										>
-											Remove position
+											Position entfernen
 										</button>
 									) : null}
 								</fieldset>
@@ -379,11 +390,11 @@ function EditorSidebar({
 								}
 								type="button"
 							>
-								Add position
+								Position hinzufügen
 							</button>
 							<Field
 								id="cv-languages"
-								label="Languages"
+								label="Sprachkenntnisse"
 								multiline
 								onChange={(languages) => patch({ languages })}
 								rows={3}
@@ -391,19 +402,19 @@ function EditorSidebar({
 							/>
 							<Field
 								id="cv-license"
-								label="Driver's license"
+								label="Führerschein"
 								onChange={(license) => patch({ license })}
 								value={data.license}
 							/>
 							<Field
 								id="cv-hobbies"
-								label="Hobbies"
+								label="Hobbys"
 								onChange={(hobbies) => patch({ hobbies })}
 								value={data.hobbies}
 							/>
 							<Field
 								id="cv-place"
-								label="Place (signature line)"
+								label="Ort (Unterschriftszeile)"
 								onChange={(cvPlace) => patch({ cvPlace })}
 								value={data.cvPlace}
 							/>
@@ -414,12 +425,12 @@ function EditorSidebar({
 
 			{open ? null : (
 				<button
-					aria-label="Open editor"
+					aria-label="Bearbeiten öffnen"
 					className="bew-sidebar-open"
 					onClick={onToggle}
 					type="button"
 				>
-					Edit
+					Bearbeiten
 				</button>
 			)}
 		</>

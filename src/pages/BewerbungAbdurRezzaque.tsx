@@ -1,6 +1,12 @@
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
-import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties } from "react";
+import {
+	useEffect,
+	useLayoutEffect,
+	useRef,
+	useState,
+	type CSSProperties,
+} from "react";
 import {
 	fileNameFromName,
 	loadBewerbungData,
@@ -15,7 +21,6 @@ import EditorSidebar, { type TabId } from "./EditorSidebar";
 const PAGE_TABS: TabId[] = ["personal", "anschreiben", "lebenslauf"];
 
 const BODY = "#404040";
-const WHITE = "#ffffff";
 
 type TextProps = {
 	left: number;
@@ -111,16 +116,20 @@ function CoverPage({
 	return (
 		<article className="bew-page" ref={pageRef}>
 			<div className="bew-banner bew-banner--cover" />
-			<T left={431.62} top={50.63} size={16.75} color={WHITE}>
-				Bewerbung
-			</T>
+			<p className="bew-banner-label bew-banner-label--cover">Bewerbung</p>
+			<div className="bew-cover-heading">
+				{data.jobTitle ? <p className="bew-cover-job-title">{data.jobTitle}</p> : null}
+				{data.companyName ? (
+					<p className="bew-cover-company">bei der {data.companyName}</p>
+				) : null}
+			</div>
 			<img
-				alt={`Portrait of ${data.name}`}
+				alt={`Porträt von ${data.name}`}
 				className="bew-photo bew-photo--cover"
 				src={data.photoCover}
 			/>
 			<div className="bew-cover-meta">
-				<p>{data.name}</p>
+				<p className="bew-cover-name">{data.name}</p>
 				<p className="bew-cover-meta-spaced">{data.street}</p>
 				<p>{data.city}</p>
 				<p>{data.phone ? `Mobil: ${data.phone}` : ""}</p>
@@ -146,9 +155,7 @@ function LetterPage({
 	return (
 		<article className="bew-page" ref={pageRef}>
 			<div className="bew-banner bew-banner--letter" />
-			<T left={431.62} top={50.63} size={16.75} color={WHITE}>
-				Anschreiben
-			</T>
+			<p className="bew-banner-label bew-banner-label--letter">Anschreiben</p>
 			<T left={70.82} top={35.43} size={12}>
 				{data.name}
 			</T>
@@ -172,6 +179,9 @@ function LetterPage({
 			</T>
 			<p className="bew-letter-date">{data.date}</p>
 			<div className="bew-letter-text">
+				{data.jobTitle ? (
+					<p className="bew-letter-subject">{data.jobTitle}</p>
+				) : null}
 				{data.letterGreeting ? <p>{data.letterGreeting}</p> : null}
 				{paragraphs.map((paragraph, index) => (
 					<p key={`${index}-${paragraph.slice(0, 24)}`}>{paragraph}</p>
@@ -195,11 +205,9 @@ function CvPage({
 	return (
 		<article className="bew-page" ref={pageRef}>
 			<div className="bew-banner bew-banner--cv" />
-			<T left={407.2} top={50.03} size={16.75} color={WHITE}>
-				 Lebenslauf
-			</T>
+			<p className="bew-banner-label bew-banner-label--cv">Lebenslauf</p>
 			<img
-				alt={`Portrait of ${data.name}`}
+				alt={`Porträt von ${data.name}`}
 				className="bew-photo bew-photo--cv"
 				src={data.photoCv}
 			/>
@@ -412,11 +420,15 @@ function BewerbungAbdurRezzaque() {
 
 			<main className="bew-workspace" ref={workspaceRef}>
 				<button
-					aria-label={isDownloading ? "Preparing PDF" : "Download PDF"}
+					aria-label={
+						isDownloading ? "PDF wird erstellt" : "PDF herunterladen"
+					}
 					className="bew-download"
 					disabled={isDownloading}
 					onClick={() => void handleDownload()}
-					title={isDownloading ? "Preparing PDF…" : "Download PDF"}
+					title={
+						isDownloading ? "PDF wird erstellt…" : "PDF herunterladen"
+					}
 					type="button"
 				>
 					<DownloadIcon />
@@ -424,33 +436,35 @@ function BewerbungAbdurRezzaque() {
 
 				<div
 					className="bew-pages-frame"
-					style={{ height: pagesHeight ? pagesHeight * previewScale : undefined }}
+					style={{
+						height: pagesHeight ? pagesHeight * previewScale : undefined,
+					}}
 				>
-				<section
-					aria-label={`Bewerbung ${data.name}`}
-					className="bew-pages"
-					ref={pagesRef}
-					style={{ transform: `scale(${previewScale})` }}
-				>
-					<CoverPage
-						data={data}
-						pageRef={(node) => {
-							pageRefs.current[0] = node;
-						}}
-					/>
-					<LetterPage
-						data={data}
-						pageRef={(node) => {
-							pageRefs.current[1] = node;
-						}}
-					/>
-					<CvPage
-						data={data}
-						pageRef={(node) => {
-							pageRefs.current[2] = node;
-						}}
-					/>
-				</section>
+					<section
+						aria-label={`Bewerbung ${data.name}`}
+						className="bew-pages"
+						ref={pagesRef}
+						style={{ transform: `scale(${previewScale})` }}
+					>
+						<CoverPage
+							data={data}
+							pageRef={(node) => {
+								pageRefs.current[0] = node;
+							}}
+						/>
+						<LetterPage
+							data={data}
+							pageRef={(node) => {
+								pageRefs.current[1] = node;
+							}}
+						/>
+						<CvPage
+							data={data}
+							pageRef={(node) => {
+								pageRefs.current[2] = node;
+							}}
+						/>
+					</section>
 				</div>
 			</main>
 		</div>
